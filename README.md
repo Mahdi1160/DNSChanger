@@ -56,6 +56,10 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 5. Push to the branch (`git push origin feature-branch`).
 6. Create a new Pull Request.
 
+## Last releases
+DNSChanger is currently only available on Windows(DNSChanger v1.0.0 For Windows)
+[https://github.com/Mahdi1160/DNSChanger/releases/tag/v1.0.0]()
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
