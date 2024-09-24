@@ -59,7 +59,7 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Last releases
 DNSChanger is currently only available on Windows
 
-DNSChanger v1.0.0 For Windows
+[DNSChanger v1.0.0 For Windows]([DNSChanger v1.0.0 For Windows](https://github.com/Mahdi1160/DNSChanger/releases/tag/v1.0.0)
 
 ## License
 
