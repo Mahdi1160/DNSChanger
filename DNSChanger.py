@@ -1,11 +1,14 @@
 import sys
+import os
 import json
 import re
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QComboBox, QPushButton, QLineEdit, QProgressBar, QDialog, QVBoxLayout, QHBoxLayout, QMessageBox
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtGui import QColor, QPalette 
+from PyQt5.QtGui import QColor, QPalette, QIcon
 from PyQt5.QtCore import Qt
 import wmi
+from version import __version__
+
 
 class DNSChanger(QWidget):
 
@@ -21,13 +24,22 @@ class DNSChanger(QWidget):
 
     def initUI(self):
         
+          # Get the path to the icon
+        if hasattr(sys, '_MEIPASS'):
+            icon_path = os.path.join(sys._MEIPASS, 'icon.png')
+        else:
+            icon_path = 'icon.png'
+
+        self.setWindowIcon(QIcon(icon_path))
+        
         # Set window properties
-        self.setWindowTitle('DNS Changer')
+        self.setWindowTitle(f'DNS Changer v{__version__}')
         screen = QApplication.primaryScreen()
         screen_size = screen.size()
         width = int(screen_size.width() * 0.33)
         height = int(screen_size.height() * 0.21875)
         self.setFixedSize(width, height)
+
         
         # Create layout
         grid = QGridLayout()
@@ -74,7 +86,7 @@ class DNSChanger(QWidget):
         self.status_label.setFont(QtGui.QFont('Helvetica', 10))
         self.status_label.setStyleSheet("QLabel {color: green; border: 1px solid darkGreen; border-radius: 5px; padding: 3px;}")
 
-        footer = QLabel('<a href="https://github.com/Mahdi1160/DNSChanger">Github Link</a> | License: MIT | Developer: MahdiG')
+        footer = QLabel('<a href="https://github.com/Mahdi1160/DNSChanger">Github Link</a> | MIT License Copyright (c) 2024 MahdiG')
         footer.setAlignment(Qt.AlignCenter)
         footer.setFont(QtGui.QFont('Helvetica', 10))
         footer.setStyleSheet("QLabel {color: gray;}")
@@ -174,17 +186,27 @@ class DNSChanger(QWidget):
                 dns_pair.append('')  # Add an empty string if the second address is missing
             self.dnsCombo.addItem(f"{name} - {dns_pair[0]}, {dns_pair[1]}")
         
+
     def load_dns_list(self):
+        default_dns_list = {
+            "Google": ["8.8.8.8", "8.8.4.4"],
+            "Cloudflare": ["1.1.1.1", "1.0.0.1"],
+            "Electro": ["78.157.42.100", "78.157.42.101"],
+            "Shekan": ["178.22.122.100", "185.51.200.2"],
+            "Radar Games": ["10.202.10.10", "10.202.10.10"]
+        }
+
         try:
             with open('dns_list.json', 'r') as file:
-                return json.load(file)
-        except FileNotFoundError:
-            return {
-                'Google DNS': ['8.8.8.8', '8.8.4.4'],
-                'Cloudflare DNS': ['1.1.1.1', '1.0.0.1'],
-                'Electro DNS': ['78.157.42.100', '78.157.42.101'],
-                'Shekan DNS': ['178.22.122.100', '185.51.200.2']
-            }
+                dns_list = json.load(file)
+                if not isinstance(dns_list, dict):
+                    raise ValueError("Invalid content")
+                return dns_list
+        except (FileNotFoundError, ValueError, json.JSONDecodeError):
+            with open('dns_list.json', 'w') as file:
+                json.dump(default_dns_list, file, indent=4)
+            return default_dns_list
+
         
     def save_dns_list(self):
         with open('dns_list.json', 'w') as file:
