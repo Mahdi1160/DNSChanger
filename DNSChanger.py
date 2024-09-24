@@ -60,8 +60,8 @@ class DNSChanger(QWidget):
         screen = QApplication.primaryScreen()
         dpi = screen.logicalDotsPerInch()
         scale_factor = dpi / 96.0  # 96 DPI is the standard DPI
-        width = int(500 * scale_factor)
-        height = int(250 * scale_factor)
+        width = int(420 * scale_factor)
+        height = int(200 * scale_factor)
         self.setFixedSize(width, height)
 
         # Create layout
@@ -71,35 +71,35 @@ class DNSChanger(QWidget):
         # Add widgets
         title = QLabel('DNS Changer')
         title.setAlignment(Qt.AlignCenter)
-        title.setFont(QtGui.QFont('Times', int(12 * scale_factor), QtGui.QFont.Bold))
+        title.setFont(QtGui.QFont('Times', int(16 * scale_factor), QtGui.QFont.Bold))
 
         dnsLabel = QLabel('DNS Server:')
-        dnsLabel.setFont(QtGui.QFont('Times', int(8 * scale_factor)))
+        dnsLabel.setFont(QtGui.QFont('Times', int(9 * scale_factor)))
         
         self.dnsCombo = QComboBox()
         self.update_dns_combo()
-        self.dnsCombo.setFont(QtGui.QFont('Helvetica', int(6 * scale_factor)))
-        self.dnsCombo.setMinimumWidth(int(300 * scale_factor))
+        self.dnsCombo.setFont(QtGui.QFont('Helvetica', int(8 * scale_factor)))
+        self.dnsCombo.setMinimumWidth(int(250 * scale_factor))
         
         self.setDNSBtn = QPushButton('Set DNS')
         self.setDNSBtn.clicked.connect(self.setDNS)        
-        self.setDNSBtn.setFont(QtGui.QFont('Helvetica', int(7 * scale_factor)))
+        self.setDNSBtn.setFont(QtGui.QFont('Helvetica', int(9 * scale_factor)))
         self.setDNSBtn.setMinimumWidth(int(150 * scale_factor))
         
         self.clearDNSBtn = QPushButton('Clear DNS')
         self.clearDNSBtn.clicked.connect(self.clearDNS)
-        self.clearDNSBtn.setFont(QtGui.QFont('Helvetica', int(7 * scale_factor)))
-        self.clearDNSBtn.setMinimumWidth(int(150 * scale_factor))
+        self.clearDNSBtn.setFont(QtGui.QFont('Helvetica', int(9 * scale_factor)))
+        self.clearDNSBtn.setMinimumWidth(int(90 * scale_factor))
 
         self.addDNSBtn = QPushButton('Add')
         self.addDNSBtn.clicked.connect(self.add_custom_dns)
-        self.addDNSBtn.setFont(QtGui.QFont('Helvetica', int(6 * scale_factor)))
-        self.addDNSBtn.setMaximumWidth(int(150 * scale_factor))
+        self.addDNSBtn.setFont(QtGui.QFont('Helvetica', int(8 * scale_factor)))
+        self.addDNSBtn.setMaximumWidth(int(90 * scale_factor))
 
         self.removeDNSBtn = QPushButton('Remove')
         self.removeDNSBtn.clicked.connect(self.remove_dns)
-        self.removeDNSBtn.setFont(QtGui.QFont('Helvetica', int(6 * scale_factor)))
-        self.removeDNSBtn.setMaximumWidth(int(150 * scale_factor))
+        self.removeDNSBtn.setFont(QtGui.QFont('Helvetica', int(8 * scale_factor)))
+        self.removeDNSBtn.setMaximumWidth(int(90 * scale_factor))
         
         self.progress = QProgressBar()
         self.progress.setTextVisible(False)
@@ -109,9 +109,9 @@ class DNSChanger(QWidget):
         self.status_label.setFont(QtGui.QFont('Helvetica', int(7 * scale_factor)))
         self.status_label.setStyleSheet("QLabel {color: green; border: 1px solid darkGreen; border-radius: 5px; padding: 3px;}")
 
-        footer = QLabel('<a href="https://github.com/Mahdi1160/DNSChanger">Github Link</a> | MIT License Copyright (c) 2024 MahdiG')
+        footer = QLabel('<a href="https://github.com/Mahdi1160/DNSChanger">Github</a> | MIT License Copyright (c) 2024 MahdiG')
         footer.setAlignment(Qt.AlignCenter)
-        footer.setFont(QtGui.QFont('Helvetica', int(5 * scale_factor)))
+        footer.setFont(QtGui.QFont('Helvetica', int(8 * scale_factor)))
         footer.setStyleSheet("QLabel {color: gray;}")
         footer.setOpenExternalLinks(True)
 
@@ -174,8 +174,6 @@ class DNSChanger(QWidget):
         self.status_label.setText("DNS cleared") 
         self.status_label.setStyleSheet("QLabel {color: red; border: 1px solid darkRed; border-radius: 5px; padding: 3px;}")
         self.progress.setValue(0)
-            
-        print("DNS settings cleared.")
         
     def add_custom_dns(self):
         dialog = CustomDNSDialog(self)
@@ -257,15 +255,15 @@ class CustomDNSDialog(QDialog):
         
         self.nameInput = QLineEdit()
         self.nameInput.setPlaceholderText('Enter DNS name')
-        self.nameInput.setFont(QtGui.QFont('Helvetica', 12))
+        self.nameInput.setFont(QtGui.QFont('Helvetica', 9))
         
         self.dnsInput1 = QLineEdit()
         self.dnsInput1.setPlaceholderText('Enter primary DNS address (e.g. 8.8.8.8)')
-        self.dnsInput1.setFont(QtGui.QFont('Helvetica', 12))
+        self.dnsInput1.setFont(QtGui.QFont('Helvetica', 9))
         
         self.dnsInput2 = QLineEdit()
         self.dnsInput2.setPlaceholderText('Enter secondary DNS address (e.g. 8.8.4.4)')
-        self.dnsInput2.setFont(QtGui.QFont('Helvetica', 12))
+        self.dnsInput2.setFont(QtGui.QFont('Helvetica', 9))
         
         buttonLayout = QHBoxLayout()
         self.okButton = QPushButton('OK')
@@ -289,8 +287,10 @@ class CustomDNSDialog(QDialog):
         return name, dns_pair
 
 if __name__ == '__main__':
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+    
     app = QApplication(sys.argv)
-    app.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    app.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     dnsChanger = DNSChanger()
     sys.exit(app.exec_())
+
