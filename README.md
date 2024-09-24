@@ -62,7 +62,7 @@ DNSChanger is currently only available on Windows
 [DNSChanger v1.0.0 For Windows](https://github.com/Mahdi1160/DNSChanger/releases/tag/v1.0.0)
 
 ## How to Run
-To run DNSChanger with administrator privileges, make sure to include the `DNSChanger.exe.manifest` file in the same directory as the executable.
+make sure to run DNSChanger with administrator privileges
 
 ## License
 
