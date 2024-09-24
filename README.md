@@ -57,8 +57,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 6. Create a new Pull Request.
 
 ## Last releases
-DNSChanger is currently only available on Windows(DNSChanger v1.0.0 For Windows)
-[https://github.com/Mahdi1160/DNSChanger/releases/tag/v1.0.0]()
+DNSChanger is currently only available on Windows
+[https://github.com/Mahdi1160/DNSChanger/releases/tag/v1.0.0](DNSChanger v1.0.0 For Windows)
 
 ## License
 
